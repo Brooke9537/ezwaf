@@ -13,9 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
+import waf
+
+from waf.views import index
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', waf.views.index),
+    url(r'^show', waf.views.show),
+    url(r'^add', waf.views.add),
+    url(r'^del', waf.views.delban),
+    url(r'^reset', waf.views.reset),
 ]
