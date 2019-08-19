@@ -85,10 +85,10 @@ DATABASES = {
 
 from mongoengine import connect
 # 内网测试用数据库
-connect('WAF',host = '127.0.0.1',port = 27017)
+#connect('WAF',host = '127.0.0.1',port = 27017)
 
 # 生产环境数据库
-#connect('WAF',host = '10.21.10.177',port = 27017)
+connect('WAF',host = '10.21.10.177',port = 27017)
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
