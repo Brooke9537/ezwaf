@@ -20,7 +20,7 @@ import waf
 from waf.views import index
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin$', admin.site.urls),
     url(r'^login$', waf.views.login),
     url(r'^logout$', waf.views.login),
     url(r'^$', waf.views.index),
