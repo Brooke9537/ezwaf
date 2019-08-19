@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for ezwaf project.
 
@@ -25,6 +26,7 @@ SECRET_KEY = 'jwn!l@+z%)5eu7fm-$lee&j0zdp%o1hr@lg*%h!r-n+mwvgp&8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+APPEND_SLASH = False
 
 ALLOWED_HOSTS = ["0.0.0.0","*"]
 
@@ -77,12 +79,17 @@ WSGI_APPLICATION = 'ezwaf.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': None,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
 from mongoengine import connect
+# 内网测试用数据库
 connect('WAF',host = '127.0.0.1',port = 27017)
+
+# 生产环境数据库
+#connect('WAF',host = '10.21.10.177',port = 27017)
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators

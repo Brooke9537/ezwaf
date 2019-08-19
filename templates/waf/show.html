@@ -47,8 +47,8 @@
                                 <tr>
                                     <td><a href="http://ip.taobao.com/service/getIpInfo.php?ip={{ cc.ip }}">{{ cc.ip }}</a></td>
                                     <td>{{ cc.count }}</td>
-                                    <td>  <button value="{{ cc.ip }}" id="cz" type="button" class="btn btn-primary">删除CC记录</button>  
-                                        <button value="{{ cc.ip }}" id="ban" type="button"  class="btn btn-danger"> 加入黑名单</button> 
+                                    <td>  <a href="/reset?ip={{ cc.ip }}" type="button" class="btn btn-primary">删除CC记录</a>  
+                                        <a href="/add?ip={{ cc.ip }}"  type="button"  class="btn btn-danger"> 加入黑名单</a> 
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -68,7 +68,7 @@
                                             <td>0</td>
                                         {% endif %}
                                     {% endfor %}
-                                    <td>  <button value="{{ ban.ip }}" id="del" type="button" class="btn btn-info">移出黑名单</button>  </td>
+                                    <td>  <a href="/del?ip={{ ban.ip }}" type="button" class="btn btn-info">移出黑名单</a>  </td>
                                 </tr>
                             {% endfor %}
                         {% endif %}
@@ -89,9 +89,6 @@
     //cc_xz    删除CC记录，手动输入ip
     //add_xz   加入黑名单，手动输入ip
     //ban_xz   移出黑名单，手动输入ip
-    //cz       删除CC记录，ip记录在value中
-    //ban      加入黑名单，ip记录在value中
-    //del      移出黑名单，ip记录在calue中
 function f_check_IP(ip){ //判断输入是否为正确的ip
     var re=/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/;//正则表达式
     if(re.test(ip)){
@@ -133,41 +130,6 @@ $('#ban_xz').click( function () {
         ajax("del",ip);
     }
 });
-
-
-$('#cz').click( function () {
-    var ip = $('#cz').val();
-    if( ip == null ){
-        alert("输入ip");
-    }else if(!f_check_IP(ip))
-        alert("请输入正确的ip")
-    else{
-        ajax("reset",ip);
-    }
-});
-
-$('#ban').click( function () {
-    var ip = $('#ban').val();
-    if( ip == null ){
-        alert("输入ip");
-    }else if(!f_check_IP(ip))
-        alert("请输入正确的ip")
-    else{
-        ajax("add",ip);
-    }
-});
-
-$('#del').click( function () {
-    var ip = $('#del').val();
-    if( ip == null ){
-        alert("输入ip");
-    }else if(!f_check_IP(ip))
-        alert("请输入正确的ip")
-    else{
-        ajax("del",ip);
-    }
-});
-
 
 function ajax(mess,ip){
     $.ajax({
