@@ -27,42 +27,44 @@ def login(request):
             # 登陆之后跳转
             if request.GET.get('next') != 'None' and request.GET.get('next') != '':
                 return redirect(request.GET.get('next'))
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/ezwaf/')
         else:
             return render(request, 'login.html', {'login_err': 'Error username or password!'})
     else:
         return render(request, 'login.html', {'next': request.GET.get('next'),'login_err': ''})
 
 
-@login_required
+@login_required(login_url='/ezwaf/login')
 def logout(request):
     """ 用户退出 """
-    logout(request)
-    return HttpResponseRedirect('/login')
+    auth.logout(request)
+    return HttpResponseRedirect('/ezwaf/login')
 
-@login_required
+@login_required(login_url='/ezwaf/login')
 def index(request): #dashboard
     return render(request, 'index.html')
-@login_required
-def show(request): #查看信息
+
+@login_required(login_url='/ezwaf/login')
+def show(request): #查看信息'
     # 查询数据库中所有数据
     url = request.path
-    if url == '/show/cc':
+    if url == '/ezwaf/show/cc':
         cc_list = cc_ban.objects.filter()
         ban_list = ip_ban.objects.filter()
         context = {"url":"cc", "ban_list": ban_list, "cc_list": cc_list, "project" : "CC攻击拦截"}
         return render(request, 'waf/show.html',context)
-    if url == '/show/ban':
+    if url == '/ezwaf/show/ban':
         cc_list = cc_ban.objects.filter()
         ban_list = ip_ban.objects.filter()
         context = {"url":"ban", "ban_list": ban_list, "cc_list": cc_list, "project" : "IP黑名单"}
         return render(request, 'waf/show.html',context)
-@login_required
+
+@login_required(login_url='/ezwaf/login')
 def urls(request): #URL过滤
     url_list = url_ban.objects.filter()
     context = {"url_list":url_list, "project" : "URL过滤"}
     return render(request, 'waf/urls.html',context)
-@login_required
+@login_required(login_url='/ezwaf/login')
 def qxurl(request):
     if request.method == 'POST':
         url = request.POST.get("url")
@@ -78,7 +80,7 @@ def qxurl(request):
             return HttpResponse("<script>alert(\"成功取消过滤！\");window.location.href=\"/urls\";</script>")
         else:
             return HttpResponse("<script>alert(\"出现错误，请检查后重试！\");window.location.href=\"/urls\";</script>")
-@login_required
+@login_required(login_url='/ezwaf/login')
 def addurl(request):
     if request.method == 'POST':
         url = request.POST.get("url")
@@ -89,7 +91,7 @@ def addurl(request):
             return HttpResponse("ok")
         else:
             return HttpResponse('url cannot be None')
-@login_required
+@login_required(login_url='/ezwaf/login')
 def add(request): #添加黑名单
     if request.method == 'POST':
         ip = request.POST.get("ip")
@@ -109,7 +111,7 @@ def add(request): #添加黑名单
             return HttpResponse("<script>alert(\"添加成功！\");window.location.href=\"/show/ban\";</script>")
         else:
             return HttpResponse("<script>alert(\"出现错误，请检查后重试！\");window.location.href=\"/show/ban\";</script>")
-@login_required
+@login_required(login_url='/ezwaf/login')
 def delban(request): #删除黑名单
     if request.method == 'POST':
         ip = request.POST.get("ip")
@@ -125,7 +127,7 @@ def delban(request): #删除黑名单
             return HttpResponse("<script>alert(\"已移出黑名单\");window.location.href=\"/show/ban\";</script>")
         else:
             return HttpResponse("<script>alert(\"出现错误，请检查后重试！\");window.location.href=\"/show/ban\";</script>")
-@login_required
+@login_required(login_url='/ezwaf/login')
 def reset(request): #重置cc
     if request.method == 'POST':
         ip = request.POST.get("ip")
@@ -142,12 +144,12 @@ def reset(request): #重置cc
             return HttpResponse("<script>alert(\"重置成功！\");window.location.href=\"/show/cc\";</script>")
         else:
             return HttpResponse("<script>alert(\"出现错误，请检查后重试！\");window.location.href=\"/show/cc\";</script>")
-@login_required
+@login_required(login_url='/ezwaf/login')
 def settings(request): #waf设置
     settings = setting.objects.filter()
     context = {"project" : "waf设置","settings":settings}
     return render(request, 'waf/settings.html',context)
-@login_required
+@login_required(login_url='/ezwaf/login')
 def modsettings(request):  # 修改设置
     def modefy(var):
         varmod = request.POST.get(var)

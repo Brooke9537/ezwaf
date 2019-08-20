@@ -17,25 +17,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 import waf
 
-from waf.views import index
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^login$', waf.views.login),
-    url(r'^logout$', waf.views.login),
-    url(r'^$', waf.views.index),
-    
-    url(r'^show', waf.views.show),
-
-    url(r'^add$', waf.views.add),
-    url(r'^del', waf.views.delban),
-    url(r'^reset', waf.views.reset),
-
-    url(r'^settings',waf.views.settings),
-    url(r'^modsettings',waf.views.modsettings),
-    
-    url(r'^urls',waf.views.urls),
-    url(r'^qxurl',waf.views.qxurl),
-    url(r'^addurl$',waf.views.addurl),
-
+    url(r'^ezwaf/', include('waf.urls')), 
+    url(r'^', include('waf.urls')), 
 ]
