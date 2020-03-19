@@ -47,7 +47,7 @@ def index(request):
     return render(request, 'index.html', {'ban_ip':13,
                     'cc_deny':26,
                     'cc_ip_list':[{'ip':'127.0.0.1','count':50},{'ip':'123.42.45.6','count':34}],
-                    'logs':['sdsdsd','dsdsds']
+                    'logs':['172.17.0.1 [2020-03-18 12:49:34] "blockip wpad/wpad.dat数据全是假的" "-" - "blocked ip is 172.17.0.1"','172.17.0.1 [没写2020-03-19 02:00:53] "GET 127.0.0.1/777" "No Way!!!"  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like G懒得写ecko) Chrome/80.0.3987.132 Safari/537.36" "/77"']
                 })
 
 
