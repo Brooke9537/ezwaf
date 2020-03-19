@@ -15,16 +15,18 @@ urlpatterns = [
     
     
     url(r'^show/', views.show),
+    url(r'^cc/', views.show),
+    url(r'^ban/', views.show),
 
-    url(r'^add/$', views.add),
+    url(r'^add$', views.add),
     url(r'^del/$', views.delban),
     url(r'^reset/$', views.reset),
 
     url(r'^settings/$',views.settings),
-    url(r'^/modsettings/$',views.modsettings),
+    url(r'^modsettings/$',views.modsettings),
     
     url(r'^urls/$',views.urls),
     url(r'^qxurl/$',views.qxurl),
-    url(r'^addurl/$',views.addurl),
+    url(r'^addurl$',views.addurl),
 
 ]

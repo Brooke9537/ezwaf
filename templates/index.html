@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
 
-    <title>ezbuy | CMDB</title>
+    <title>WAF</title>
 
 
     {% include 'public/link_css.html' %}
@@ -23,9 +23,77 @@
                 {% include 'public/nav_bar_header.html' %}
             </div>
                 <div class="row">
-                   
+                    <div class="col-lg-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <span class="label label-info pull-right">Ip</span>
+                                <h5>Ban ip 总数</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins"><a href="/ezwaf/ban/">{{ ban_ip }}</a></h1>
+                                <div class="stat-percent font-bold text-info"> <i class="fa fa-level-up"></i></div>
+                                <small>All ip</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <span class="label label-danger pull-right">count</span>
+                                <h5>cc 攻击总次数</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins"><a href="/ezwaf/cc/">{{ cc_deny }}</a></h1>
+                                <div class="stat-percent font-bold text-navy"> <i class="fa fa-level-up"></i></div>
+                                <small>All CCdeny</small>
+                            </div>
+                        </div>
+                    </div>
 
-                    
+                    <div class="col-lg-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <span class="label label-info pull-right">Top 5</span>
+                                <h5>TOP5 cc攻击次数</h5>
+                            </div>
+                            <div class="ibox-content inspinia-timeline">
+                                {% for ip in cc_ip_list %}
+                                <div class="timeline-item111">
+                                    <div class="row">
+                                        <div class="col-xs-4 content no-top-border">
+                                            <p><strong><span class="label label-danger"><font size="3">{{ ip.ip }}</font></span> </strong></p>
+                                            <p>{{ ip.count }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <span class="label label-info pull-right">logs</span>
+                                <h5>拦截日志</h5>
+                            </div>
+                            <div class="ibox-content inspinia-timeline">
+                                {% for log in logs %}
+                                <div class="timeline-item111">
+                                    <div class="row">
+                                        <div class="col-xs-3 date">
+                                            <i class="fa fa-pied-piper-alt"></i>
+                                        </div>
+                                        <div class="col-xs-7 content no-top-border">
+                                            <p>{{ log }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             {% include 'public/footer.html' %}
         </div>

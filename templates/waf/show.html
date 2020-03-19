@@ -133,7 +133,7 @@ $('#ban_xz').click( function () {
 
 function ajax(mess,ip){
     $.ajax({
-        url:'/'+mess,
+        url:'/ezwaf/'+mess,
         type: 'POST',
         data: {'ip':ip},
         success: function (response) {

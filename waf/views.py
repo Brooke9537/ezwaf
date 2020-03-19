@@ -8,7 +8,7 @@ from django.contrib import auth
 
 # .表示当前包下的models
 
-from models import *
+from .models import *
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -41,19 +41,26 @@ def logout(request):
     return HttpResponseRedirect('/ezwaf/login')
 
 @login_required(login_url='/ezwaf/login')
-def index(request): #dashboard
-    return render(request, 'index.html')
+def index(request):
+    """ index dashboard """
+    # 没事再写写获取数据
+    return render(request, 'index.html', {'ban_ip':13,
+                    'cc_deny':26,
+                    'cc_ip_list':[{'ip':'127.0.0.1','count':50},{'ip':'123.42.45.6','count':34}],
+                    'logs':['sdsdsd','dsdsds']
+                })
+
 
 @login_required(login_url='/ezwaf/login')
 def show(request): #查看信息'
     # 查询数据库中所有数据
     url = request.path
-    if url == '/ezwaf/show/cc':
+    if url == '/ezwaf/cc/':
         cc_list = cc_ban.objects.filter()
         ban_list = ip_ban.objects.filter()
         context = {"url":"cc", "ban_list": ban_list, "cc_list": cc_list, "project" : "CC攻击拦截"}
         return render(request, 'waf/show.html',context)
-    if url == '/ezwaf/show/ban':
+    if url == '/ezwaf/ban/':
         cc_list = cc_ban.objects.filter()
         ban_list = ip_ban.objects.filter()
         context = {"url":"ban", "ban_list": ban_list, "cc_list": cc_list, "project" : "IP黑名单"}
@@ -124,9 +131,9 @@ def delban(request): #删除黑名单
         ip = request.GET.get("ip")
         if ip!=None:
             bandel = ip_ban.objects.filter(ip=ip).delete()
-            return HttpResponse("<script>alert(\"已移出黑名单\");window.location.href=\"/show/ban\";</script>")
+            return HttpResponse("<script>alert(\"已移出黑名单\");window.location.href=\"/ezwaf/ban\";</script>")
         else:
-            return HttpResponse("<script>alert(\"出现错误，请检查后重试！\");window.location.href=\"/show/ban\";</script>")
+            return HttpResponse("<script>alert(\"出现错误，请检查后重试！\");window.location.href=\"/ezwaf/ban\";</script>")
 @login_required(login_url='/ezwaf/login')
 def reset(request): #重置cc
     if request.method == 'POST':
@@ -141,9 +148,9 @@ def reset(request): #重置cc
         # 添加到数据库
         if ip!=None:
             ccdel = cc_ban.objects.filter(ip=ip).delete()
-            return HttpResponse("<script>alert(\"重置成功！\");window.location.href=\"/show/cc\";</script>")
+            return HttpResponse("<script>alert(\"重置成功！\");window.location.href=\"/ezwaf/cc\";</script>")
         else:
-            return HttpResponse("<script>alert(\"出现错误，请检查后重试！\");window.location.href=\"/show/cc\";</script>")
+            return HttpResponse("<script>alert(\"出现错误，请检查后重试！\");window.location.href=\"/ezwaf/cc\";</script>")
 @login_required(login_url='/ezwaf/login')
 def settings(request): #waf设置
     settings = setting.objects.filter()
@@ -169,4 +176,4 @@ def modsettings(request):  # 修改设置
         modefy("CCrate")
         return redirect("/settings")
     else:
-        return HttpResponse("<script>alert(\"出现错误，请检查后重试！\");window.location.href=\"/settings\";</script>")
+        return HttpResponse("<script>alert(\"出现错误，请检查后重试！\");window.location.href=\"/ezwaf/settings\";</script>")

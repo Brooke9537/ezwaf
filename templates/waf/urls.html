@@ -76,7 +76,7 @@ $('#add_url').click( function () {
 
 function ajax(mess,urls){
     $.ajax({
-        url:'/'+mess,
+        url:'/ezwaf/'+mess,
         type: 'POST',
         data: {'url':urls},
         success: function (response) {
